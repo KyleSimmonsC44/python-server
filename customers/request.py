@@ -1,3 +1,5 @@
+from models import Customer
+
 CUSTOMERS = [
      {
       "email": "darrensimmons92@gmail.com",
