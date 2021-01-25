@@ -84,6 +84,11 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_employee(id)}"
                 else:
                     response = f"{get_all_employees()}"
+            elif resource == "locations":
+                if id is not None:
+                    response = f"{get_single_location(id)}"
+                else:
+                    response = f"{get_all_locations()}"
 
         # Response from parse_url() is a tuple with 3
         # items in it, which means the request was for
@@ -120,27 +125,24 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
-
+        print(resource)
         # Initialize new animal
-        new_animal = None
-        new_customer = None
-        new_employee = None
-        new_location = None
+        new_entry = None
 
         # Add a new animal to the list. Don't worry about
         # the orange squiggle, you'll define the create_animal
         # function next.
         if resource == "animals":
-            new_animal = create_animal(post_body)
+            new_entry = create_animal(post_body)
         elif resource == "locations":
-            new_location = create_location(post_body)
-        elif resource == "animals":
-            new_employee = create_employee(post_body)
-        elif resource == "animals":
-            new_customer = create_customer(post_body)
+            new_entry = create_location(post_body)
+        elif resource == "employees":
+            new_entry = create_employee(post_body)
+        elif resource == "customers":
+            new_entry = create_customer(post_body)
 
         # Encode the new animal and send in response
-        self.wfile.write(f"{new_animal}".encode())
+        self.wfile.write(f"{new_entry}".encode())
 
     def do_DELETE(self):
         # Set a 204 response code
